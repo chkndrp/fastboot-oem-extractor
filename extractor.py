@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 #  Extract hidden "fastboot oem" commands from firmware blobs
-#  Copyright (C) 2026 chickendrop89
+#  Copyright (C) 2026 chkndrp
 #
 #  This program is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by

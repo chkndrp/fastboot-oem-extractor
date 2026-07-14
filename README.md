@@ -75,7 +75,7 @@ Also, some FBPK containers (e.g. `barbret` bootloader) are very difficult to ext
 If you want to extract bootloader/charging pictures from a `imagefv` partition on your Qualcomm device,
 use my other tool:
 
-[chickendrop89/imagefv-extractor](https://github.com/chickendrop89/imagefv-extractor)
+[chkndrp/imagefv-extractor](https://github.com/chkndrp/imagefv-extractor)
 
 ## Requirements
 - Python 3.10 or newer
