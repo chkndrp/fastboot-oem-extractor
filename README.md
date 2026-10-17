@@ -1,4 +1,6 @@
-# fastboot-oem-extractor 
+# fastboot-oem-extractor
+![PyPI - Version](https://img.shields.io/pypi/v/fastboot-oem-extractor?logo=python&logoColor=white) ![PyPI - Downloads](https://img.shields.io/pypi/dm/fastboot-oem-extractor?logo=python&logoColor=white) ![PyPI - Typing](https://img.shields.io/pypi/types/fastboot-oem-extractor?logo=python&logoColor=white)
+
 Extract hidden "fastboot oem" commands from firmware blobs
 
 ## Supported firmware
