@@ -13,7 +13,7 @@ These firmware blobs will be accepted by this tool
 
 This is an artificial barrier for when this tool is ran in a loop against firmware images
 
-## How to use:
+## Using as a CLI tool:
 1. Installing:
 ```shell
 # With PyPi (recommended)
@@ -78,7 +78,7 @@ you can force the string lookup via this command line option:
 --force-string-lookup
 ```
 
-### Use as a Python library
+### Using as a Python library
 This project can also be used as a library for other tools that want to integrate this.
 There is one public function:
 
