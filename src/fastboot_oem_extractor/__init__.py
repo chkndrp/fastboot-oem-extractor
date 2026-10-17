@@ -1,4 +1,4 @@
-"""Python API for extracting fastboot OEM commands from firmware."""
+"""Python library to extract hidden 'fastboot oem' commands from firmware blobs"""
 
 # Extract hidden "fastboot oem" commands from firmware blobs
 # Copyright (C) 2026 chkndrp
