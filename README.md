@@ -3,6 +3,8 @@
 
 Extract hidden "fastboot oem" commands from firmware blobs
 
+---
+
 ## Supported firmware
 These firmware blobs will be accepted by this tool 
 - `ABL` (Qualcomm)
@@ -14,6 +16,8 @@ These firmware blobs will be accepted by this tool
 - Anything else containing UEFI PEs
 
 This is an artificial barrier for when this tool is ran in a loop against firmware images
+
+---
 
 ## Using as a CLI tool:
 1. Installing:
@@ -80,6 +84,8 @@ you can force the string lookup via this command line option:
 --force-string-lookup
 ```
 
+---
+
 ### Using as a Python library
 This project can also be used as a library for other tools that want to integrate this.
 There is one public function:
@@ -113,6 +119,8 @@ else:
     print("No OEM commands found.")
 ```
 
+---
+
 ## Disclaimer:
 Due to the nature of simply matching "oem" strings, the output may contain some invalid commands,
 or commands that don't work after the device is sent out of factory. Keep this in mind
@@ -120,11 +128,15 @@ or commands that don't work after the device is sent out of factory. Keep this i
 Also, some FBPK containers (e.g. `barbret` bootloader) are very difficult to extract
 `oem` commands from, and may not work. Most work just fine though.
 
+---
+
 ## Similar project
 If you want to extract bootloader/charging pictures from a `imagefv` partition on your Qualcomm device,
 use my other tool:
 
 [chkndrp/imagefv-extractor](https://github.com/chkndrp/imagefv-extractor)
+
+---
 
 ## Requirements
 - Python 3.10 or newer
