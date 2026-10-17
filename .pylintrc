@@ -8,6 +8,7 @@ clear-cache-post-run=no
 # number of processors available to use, and will cap the count on Windows to
 # avoid hangs.
 jobs=0
+source-roots=src
 
 # List of plugins (as comma separated values of python module names) to load,
 # usually to register additional checkers.

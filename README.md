@@ -14,19 +14,33 @@ These firmware blobs will be accepted by this tool
 This is an artificial barrier for when this tool is ran in a loop against firmware images
 
 ## How to use:
-1. Install python requirements
+1. Installing:
 ```shell
+# With PyPi (recommended)
+pip install fasboot_oem_extractor
+```
+
+```shell
+# From source/clone
 pip install -r requirements.txt
 ```
 
 2. Prepare your firmware images from the internet, or by pulling them off the device with `adb`
-3. Run extractor.py against the image
+3. Run the installed CLI against the image
 ```shell
-# Example for Redmi Note 14 Pro+ 5G (amethyst)
+# PyPi
+python -m fastboot_oem_extractor ./abl.elf
+```
 
-╭─user@hostname ~/fboem ‹master› 
-╰─$ python ./extractor.py ./abl.elf
-                  
+```shell
+# Source/clone
+python ./extractor.py ./abl.elf
+```
+
+4. Fetch the output
+```shell
+# Example output for Redmi Note 14 Pro+ 5G (amethyst)
+            
 (x) File contains common bootloader magic bytes
 (x) Reading firmware file (first 10MB): abl.elf
 (x) Found valid UEFI firmware structure at offset: 0x1000
@@ -62,6 +76,39 @@ If your file is some sparse image that does not contain any UEFI PEs or common b
 you can force the string lookup via this command line option:
 ```shell
 --force-string-lookup
+```
+
+### Use as a Python library
+This project can also be used as a library for other tools that want to integrate this.
+There is one public function:
+
+```python
+extract_commands(firmware_file, force_string_lookup=False) -> list[str] | None
+```
+
+- `firmware_file` (`str | pathlib.Path`): Path to the firmware image.
+- `force_string_lookup` (`bool`): Force the oem command string lookup on raw images. Defaults to `False`.
+- **Returns:** 
+    - A sorted list of unique command strings when the format is recognized.
+    - An empty list if no commands are found.
+    - `None` if the format is unrecognized and `force_string_lookup` is `False`.
+- **Raises:** `OSError` if the file cannot be read.
+
+**Quick example:**
+```python
+# from pathlib import Path
+from fastboot_oem_extractor import extract_commands
+
+# commands = extract_commands(Path("./abl.elf"))
+commands = extract_commands("./abl.elf")
+
+if commands is None:
+    print("Unrecognized firmware format.")
+elif commands:
+    print(commands)
+    # Example output: ['fastboot oem allow-wipe-userdata', ...]
+else:
+    print("No OEM commands found.")
 ```
 
 ## Disclaimer:

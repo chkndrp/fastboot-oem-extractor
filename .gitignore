@@ -4,6 +4,12 @@
 !.*
 !.*/**
 
+!src/
+!src/**
 !LICENSE
 !requirements.txt
 !README.md
+!pyproject.toml
+
+src/**/__pycache__/
+src/**/__pycache__/**
