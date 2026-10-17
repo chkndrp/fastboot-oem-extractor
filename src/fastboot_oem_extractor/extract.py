@@ -148,7 +148,6 @@ def _scan_firmware(firmware_file: Path, force_string_lookup: bool) -> tuple[list
     """Scan a firmware file for fastboot OEM commands"""
 
     if force_string_lookup:
-        logger.info("Searching firmware strings for OEM commands")
         return _find_oem_commands(firmware_file.read_bytes()), True
 
     with firmware_file.open("rb") as firmware:
@@ -162,7 +161,6 @@ def _scan_firmware(firmware_file: Path, force_string_lookup: bool) -> tuple[list
             return commands, True
     elif any(header.startswith(pattern) for pattern in BL_MAGIC_PATTERNS[1:]):
         logger.info("File contains common bootloader magic bytes")
-        logger.info("Searching firmware strings for OEM commands")
 
         commands = _find_oem_commands(
             firmware_file.read_bytes(),
