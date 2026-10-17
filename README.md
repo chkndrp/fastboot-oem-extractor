@@ -23,7 +23,7 @@ This is an artificial barrier for when this tool is ran in a loop against firmwa
 1. Installing:
 ```shell
 # With PyPi (recommended)
-pip install fasboot_oem_extractor
+pip install fastboot_oem_extractor
 ```
 
 ```shell
