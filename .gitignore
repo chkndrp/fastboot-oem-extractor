@@ -9,6 +9,7 @@
 !LICENSE
 !requirements.txt
 !README.md
+!CHANGELOG.md
 !pyproject.toml
 
 src/**/__pycache__/
