@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "fastboot-oem-extractor"
-version = "1.0.2"
+version = "1.0.3"
 description = 'Extract hidden "fastboot oem" commands from firmware blobs'
 authors = [{ name = "chkndrp", email = "chkndrp@gmail.com" }]
 keywords = [
