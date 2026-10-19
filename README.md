@@ -20,31 +20,28 @@ This is an artificial barrier for when this tool is ran in a loop against firmwa
 
 ---
 
-## Using as a CLI tool:
-1. Installing:
+## Installing:
 ```shell
 # With PyPi (recommended)
 pip install fastboot_oem_extractor
 ```
 
 ```shell
-# From source/clone
+# When running from source/clone
 pip install -r requirements.txt
 ```
 
-2. Prepare your firmware images from the internet, or by pulling them off the device with `adb`
-3. Run the installed CLI against the image
+---
+
+## Using as a CLI tool:
+1. Prepare your firmware images from the internet, or by pulling them off the device with `adb`
+2. Run the installed CLI against the image
 ```shell
 # PyPi
 python -m fastboot_oem_extractor ./abl.elf
 ```
 
-```shell
-# Source/clone
-python ./extractor.py ./abl.elf
-```
-
-4. Fetch the output
+3. Fetch the output
 ```shell
 # Example output for Redmi Note 14 Pro+ 5G (amethyst)
             
