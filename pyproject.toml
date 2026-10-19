@@ -79,4 +79,3 @@ check-str-concat-over-line-jumps = true
 [tool.setuptools.packages.find]
 include = ["fastboot_oem_extractor*"]
 where = ["src"]
-exclude = [".github"]
