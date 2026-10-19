@@ -79,3 +79,6 @@ check-str-concat-over-line-jumps = true
 [tool.setuptools.packages.find]
 include = ["fastboot_oem_extractor*"]
 where = ["src"]
+
+[tool.setuptools.package-data]
+imagefv_extractor = ["py.typed"]
