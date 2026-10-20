@@ -40,6 +40,10 @@ pip install -r requirements.txt
 # PyPi
 python -m fastboot_oem_extractor ./abl.elf
 ```
+```shell
+# Source/clone
+python ./extractor.py ./abl.elf
+```
 
 3. Fetch the output
 ```shell
