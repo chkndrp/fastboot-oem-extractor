@@ -100,7 +100,7 @@ extract_commands(firmware_file, force_string_lookup=False) -> list[str] | None
     - `None` if the format is unrecognized and `force_string_lookup` is `False`.
 - **Raises:** `OSError` if the file cannot be read.
 
-**Quick example:**
+#### **Quick example:**
 ```python
 # from pathlib import Path
 from fastboot_oem_extractor import extract_commands
