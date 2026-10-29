@@ -81,4 +81,4 @@ include = ["fastboot_oem_extractor*"]
 where = ["src"]
 
 [tool.setuptools.package-data]
-imagefv_extractor = ["py.typed"]
+fastboot_oem_extractor = ["py.typed"]
