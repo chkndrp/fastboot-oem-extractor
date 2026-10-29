@@ -9,7 +9,8 @@ description = 'Extract hidden "fastboot oem" commands from firmware blobs'
 authors = [{ name = "chkndrp", email = "chkndrp@gmail.com" }]
 keywords = [
     "android", "fastboot", "oem", "extractor", "research",
-    "uefi", "lk", "abl", "bootloader", "cli", "library"
+    "bootloader", "cli", "library", "dtb", "dhtb", "bfbf", "ssss",
+    "uefi", "lk", "abl", "gbl", "elf", "qcom", "mtk", "fbpk"
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
