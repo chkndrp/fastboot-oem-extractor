@@ -92,8 +92,8 @@ def _extract_pe_files(parser: AutoParser) -> list[str]:
     return sorted(commands)
 
 
-def _check_uefi_structure(data: bytes) -> list[str] | None:
-    """Search for UEFI firmware structure (first 10MB)"""
+def _find_uefi_parser(data: bytes) -> tuple[AutoParser, int] | None:
+    """Search for valid UEFI firmware structure in data (first 10MB)"""
 
     max_offsets = min(len(data) // 2048, 100)
 
@@ -107,8 +107,20 @@ def _check_uefi_structure(data: bytes) -> list[str] | None:
             )
 
         if parser.type() != "unknown":
-            logger.info("Found valid UEFI firmware structure at offset: 0x%x", offset)
-            return _extract_pe_files(parser)
+            return parser, offset
+
+    return None
+
+
+def _check_uefi_structure(data: bytes) -> list[str] | None:
+    """Search for UEFI firmware structure (first 10MB)"""
+
+    res = _find_uefi_parser(data)
+    if res is not None:
+        parser, offset = res
+
+        logger.info("Found valid UEFI firmware structure at offset: 0x%x", offset)
+        return _extract_pe_files(parser)
 
     return None
 
@@ -186,6 +198,36 @@ def _scan_firmware(firmware_file: Path, force_string_lookup: bool) -> tuple[list
     return [], False
 
 
+def is_raw_image(firmware_file: str | Path) -> bool:
+    """
+    Check if a firmware image has no known magic bytes or UEFI structures
+
+    This function is intended to help determine whenever to use 
+    `force_string_lookup` when calling `extract_commands()`
+
+    :param firmware_file: Path to the firmware image.
+    :type firmware_file: str | pathlib.Path
+
+    :returns: `True` if the file has no recognized magic bytes or UEFI headers.
+        `False` otherwise.
+    :rtype: bool
+    :raises OSError: If the firmware image cannot be read.
+    """
+
+    path = Path(firmware_file)
+
+    with path.open("rb") as firmware:
+        header = firmware.read(0x50)
+
+    if any(header.startswith(pattern) for pattern in BL_MAGIC_PATTERNS):
+        return False
+
+    with path.open("rb") as firmware:
+        input_data = firmware.read(10 * 1024 * 1024)
+
+    return _find_uefi_parser(input_data) is None
+
+
 def extract_commands(firmware_file: str | Path, force_string_lookup: bool = False) -> list[str] | None:
     """
     Extract unique 'fastboot oem' commands from a firmware file
@@ -193,7 +235,8 @@ def extract_commands(firmware_file: str | Path, force_string_lookup: bool = Fals
     :param firmware_file: Path to the firmware image.
     :type firmware_file: str | pathlib.Path
 
-    :param force_string_lookup: Force the oem command string lookup on raw images.
+    :param force_string_lookup: Force the OEM command string lookup on raw images.
+        `is_raw_image()` can be used to decide whenever to use this argument or not
     :type force_string_lookup: bool
 
     :returns: A sorted list of command strings when the format is

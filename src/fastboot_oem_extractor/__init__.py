@@ -13,6 +13,6 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
 
-from .extract import extract_commands
+from .extract import is_raw_image, extract_commands
 
-__all__ = ["extract_commands"]
+__all__ = ["is_raw_image", "extract_commands"]

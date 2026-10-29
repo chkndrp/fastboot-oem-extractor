@@ -80,7 +80,7 @@ fastboot oem uefilog
 fastboot oem unlock
 ```
 
-If your file is some sparse image that does not contain any UEFI PEs or common binary magic bytes,
+If your file is some raw image that does not contain any UEFI PEs or common binary magic bytes,
 you can force the string lookup via this command line option:
 ```shell
 --force-string-lookup
@@ -90,9 +90,24 @@ you can force the string lookup via this command line option:
 
 ### Using as a Python library
 This project can also be used as a library for other tools that want to integrate this.
-There is one public function:
+There are two public functions:
 
 ```python
+# Check if a firmware image has no known magic bytes or UEFI structures
+is_raw_image(firmware_file) -> bool
+```
+
+This function is intended to help determine whenever to use 
+`force_string_lookup` when calling `extract_commands()`
+
+- `firmware_file` (`str | pathlib.Path`): Path to the firmware image.
+- **Returns:** 
+    - `True` if the file has no recognized magic bytes or UEFI headers.
+    - `False` otherwise.
+- **Raises:** `OSError` if the file cannot be read.
+
+```python
+# Extract unique 'fastboot oem' commands from a firmware image
 extract_commands(firmware_file, force_string_lookup=False) -> list[str] | None
 ```
 
@@ -109,8 +124,11 @@ extract_commands(firmware_file, force_string_lookup=False) -> list[str] | None
 # from pathlib import Path
 from fastboot_oem_extractor import extract_commands
 
+# israw = is_raw_image(Path("./abl.elf"))
+israw = is_raw_image("./abl.elf")
+
 # commands = extract_commands(Path("./abl.elf"))
-commands = extract_commands("./abl.elf")
+commands = extract_commands("./abl.elf", force_string_lookup=israw)
 
 if commands is None:
     print("Unrecognized firmware format.")
