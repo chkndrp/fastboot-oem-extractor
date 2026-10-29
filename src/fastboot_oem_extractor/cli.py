@@ -48,7 +48,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     parser.add_argument(
         "file",
-        help="Firmware file to analyze"
+        help="Firmware image to analyze"
     )
     parser.add_argument(
         "-fsl", "--force-string-lookup",

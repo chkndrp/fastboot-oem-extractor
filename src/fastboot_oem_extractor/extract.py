@@ -62,7 +62,7 @@ def _find_oem_commands(data: bytes, quiet: bool = False) -> list[str]:
 
 
 def _extract_pe_files(parser: AutoParser) -> list[str]:
-    """Extract firmware file and search for portable executables"""
+    """Extract firmware image and search for portable executables"""
 
     commands: set[str] = set()
 
@@ -161,7 +161,7 @@ def _extract_bootloader_pe_files(firmware_file: Path) -> list[str] | None:
 
 
 def _scan_firmware(firmware_file: Path, force_string_lookup: bool) -> tuple[list[str], bool]:
-    """Scan a firmware file for fastboot OEM commands"""
+    """Scan a firmware image for fastboot OEM commands"""
 
     if force_string_lookup:
         return _find_oem_commands(firmware_file.read_bytes()), True
@@ -186,7 +186,7 @@ def _scan_firmware(firmware_file: Path, force_string_lookup: bool) -> tuple[list
         if commands:
             return commands, True
 
-    logger.info("Reading firmware file (first 10MB): %s", firmware_file)
+    logger.info("Reading firmware image (first 10MB): %s", firmware_file)
     with firmware_file.open("rb") as firmware:
         input_data = firmware.read(10 * 1024 * 1024)
 
@@ -194,7 +194,7 @@ def _scan_firmware(firmware_file: Path, force_string_lookup: bool) -> tuple[list
     if commands is not None:
         return commands, True
 
-    logger.error("Could not recognize the provided firmware file")
+    logger.error("Could not recognize the provided firmware image")
     return [], False
 
 
@@ -230,7 +230,7 @@ def is_raw_image(firmware_file: str | Path) -> bool:
 
 def extract_commands(firmware_file: str | Path, force_string_lookup: bool = False) -> list[str] | None:
     """
-    Extract unique 'fastboot oem' commands from a firmware file
+    Extract unique 'fastboot oem' commands from a firmware image
 
     :param firmware_file: Path to the firmware image.
     :type firmware_file: str | pathlib.Path
@@ -243,7 +243,7 @@ def extract_commands(firmware_file: str | Path, force_string_lookup: bool = Fals
         recognized; an empty list if no commands are found; or `None` if the format
         is unrecognized and `force_string_lookup` is `False`.
     :rtype: list[str] | None
-    :raises OSError: If the firmware file cannot be read.
+    :raises OSError: If the firmware image cannot be read.
     """
 
     commands, recognized = _scan_firmware(

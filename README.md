@@ -50,7 +50,7 @@ python ./extractor.py ./abl.elf
 # Example output for Redmi Note 14 Pro+ 5G (amethyst)
             
 (x) File contains common bootloader magic bytes
-(x) Reading firmware file (first 10MB): abl.elf
+(x) Reading firmware image (first 10MB): abl.elf
 (x) Found valid UEFI firmware structure at offset: 0x1000
 (x) Extracting firmware...
 (x) Found 1 UEFI portable executable(s)
