@@ -148,6 +148,10 @@ or commands that don't work after the device is sent out of factory. Keep this i
 Also, some FBPK containers (e.g. `barbret` bootloader) are very difficult to extract
 `oem` commands from, and may not work. Most work just fine though.
 
+This project is always tested with 
+[chkndrp/test-bootloader-images](https://github.com/chkndrp/test-bootloader-images) 
+prior to being released
+
 ---
 
 ## Similar project
