@@ -1,3 +1,9 @@
+# 1.1.0
+- Added is_raw_image() function 
+- Added `py.typed` typing hint for IDEs
+- Added more keywords to pyproject.toml
+- Restructured and improved README
+
 # 1.0.3
 - Added support for legacy MTK magic bytes
 - Added support for FDT/DTB/FIT magic bytes
