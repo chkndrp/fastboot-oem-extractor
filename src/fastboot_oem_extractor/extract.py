@@ -40,7 +40,10 @@ logger = logging.getLogger("fastboot-oem-extractor")
 def _find_oem_commands(data: bytes, quiet: bool = False) -> list[str]:
     """Find and return OEM command strings in firmware data"""
 
-    strings = re.findall(rb"oem\s+([^\x00\n]+)", data, re.IGNORECASE)
+    strings = re.findall(
+        rb"oem\s+([^\x00\n]+)", 
+        data, re.IGNORECASE
+    )
     commands: set[str] = set()
 
     for raw_value in strings:
@@ -53,6 +56,7 @@ def _find_oem_commands(data: bytes, quiet: bool = False) -> list[str]:
             continue
 
         commands.add(command)
+
     if commands:
         logger.info("Matching 'oem *' ascii strings")
     elif not quiet:
