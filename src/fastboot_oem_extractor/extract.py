@@ -250,6 +250,12 @@ def extract_commands(firmware_file: str | Path, force_string_lookup: bool = Fals
     :raises OSError: If the firmware image cannot be read.
     """
 
+    if not isinstance(firmware_file, (str, Path)):
+        raise ValueError("firmware_file must be a string or pathlib.Path")
+
+    if not isinstance(force_string_lookup, bool):
+        raise ValueError("force_string_lookup must be a boolean")
+
     commands, recognized = _scan_firmware(
         Path(firmware_file),
         force_string_lookup
