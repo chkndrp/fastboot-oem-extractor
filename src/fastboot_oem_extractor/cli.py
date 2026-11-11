@@ -56,6 +56,10 @@ def main(argv: Sequence[str] | None = None) -> int:
         action="store_true",
         dest="fsl",
     )
+    parser.add_argument(
+        "-o", "--output",
+        help="Save extracted commands to a file",
+    )
     args = parser.parse_args(argv)
 
     try:
@@ -66,6 +70,29 @@ def main(argv: Sequence[str] | None = None) -> int:
 
     if commands:
         print("\n" + "\n".join(commands))
+
+    if args.output:
+        print()
+
+        try:
+            out_path = Path(args.output)
+
+            if out_path.is_dir():
+                logger.error("Output path (%s) is a directory, not saving anything", out_path)
+                return 1
+
+            if out_path.exists():
+                logger.warning("Output file (%s) already exists, overwriting!", out_path)
+
+            out_path.write_text(
+                "\n".join(commands) + ("\n" if commands else ""),
+                encoding="utf-8"
+            )
+        except OSError as error:
+            logger.error("Cannot write output file (%s): %s", out_path, error)
+            return 1
+
+        logger.info("Saved extracted commands to %s", out_path)
 
     if recognized == 0:
         return 1
