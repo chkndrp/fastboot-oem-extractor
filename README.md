@@ -86,9 +86,14 @@ you can force the string lookup via this command line option:
 -f, --force-string-lookup
 ```
 
+For firmware embedded after a prefix in a larger image (e.g. partition dump, special), specify its starting byte offset in decimal or hexadecimal:
+```shell
+-o, --offset
+```
+
 You can also route the clean fastboot command output to a file using this command line option:
 ```shell
--o, --output
+-O, --output
 ```
 
 ---
@@ -99,34 +104,43 @@ There are two public functions:
 
 ```python
 # Check if a firmware image has no known magic bytes or UEFI structures
-is_raw_image(firmware_file) -> bool
+is_raw_image(
+    firmware_file: str | Path,
+    offset: int = 0
+) -> bool:
 ```
 
 This function is intended to help determine whenever to use 
 `force_string_lookup` when calling `extract_commands()`
 
 - `firmware_file` (`str | pathlib.Path`): Path to the firmware image.
+- `offset` (`int`): Byte offset at which the firmware image starts. Defaults to `0`.
 - **Returns:** 
     - `True` if `firmware_file` has no recognized magic bytes or UEFI headers.
     - `False` otherwise.
 - **Raises:** 
     - `OSError` if `firmware_file` cannot be read.
-    - `ValueError` if `firmware_file` is not `str` or `pathlib.Path`.
+    - `ValueError` if `firmware_file` is not `str` or `pathlib.Path`, or `offset` is not a non-negative `int`.
 
 ```python
 # Extract unique 'fastboot oem' commands from a firmware image
-extract_commands(firmware_file, force_string_lookup=False) -> list[str] | None
+extract_commands(
+    firmware_file: str | Path,
+    force_string_lookup: bool = False,
+    offset: int = 0
+) -> list[str] | None:
 ```
 
 - `firmware_file` (`str | pathlib.Path`): Path to the firmware image.
 - `force_string_lookup` (`bool`): Force the oem command string lookup on raw images. Defaults to `False`.
+- `offset` (`int`): Byte offset at which the firmware image starts. Defaults to `0`.
 - **Returns:** 
     - A sorted list of unique command strings when the format is recognized.
     - An empty list if no commands are found.
     - `None` if the format is unrecognized and `force_string_lookup` is `False`.
 - **Raises:**
     - `OSError` if `firmware_file` cannot be read.
-    - `ValueError` if `firmware_file` is not `str` or `pathlib.Path`.
+    - `ValueError` if `firmware_file` is not `str` or `pathlib.Path`, `force_string_lookup` is not a `bool`, or `offset` is not a non-negative `int`.
 
 #### **Quick example:**
 ```python
@@ -138,6 +152,7 @@ israw = is_raw_image("./abl.elf")
 
 # commands = extract_commands(Path("./abl.elf"))
 commands = extract_commands("./abl.elf", force_string_lookup=israw)
+# commands = extract_commands(Path("./abl.elf"), offset=0x100000)
 
 if commands is None:
     print("Unrecognized firmware format.")

@@ -48,7 +48,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     )
     parser.add_argument(
         "file",
-        help="Firmware image to analyze"
+        help="Firmware image to analyze",
     )
     parser.add_argument(
         "-f", "--force-string-lookup",
@@ -56,13 +56,24 @@ def main(argv: Sequence[str] | None = None) -> int:
         action="store_true",
     )
     parser.add_argument(
-        "-o", "--output",
+        "-o", "--offset",
+        help="Start scanning at this byte offset",
+        metavar="DEC/HEX BYTES",
+        type=lambda x: int(x, 0),
+        default=0,
+    )
+    parser.add_argument(
+        "-O", "--output",
         help="Save extracted commands to a file",
     )
     args = parser.parse_args(argv)
 
     try:
-        commands, recognized = _scan_firmware(Path(args.file), args.force_string_lookup)
+        commands, recognized = _scan_firmware(
+            Path(args.file),
+            args.force_string_lookup,
+            args.offset
+        )
     except OSError as error:
         logger.error("Cannot read file (%s): %s", args.file, error)
         return 1
