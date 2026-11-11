@@ -107,9 +107,11 @@ This function is intended to help determine whenever to use
 
 - `firmware_file` (`str | pathlib.Path`): Path to the firmware image.
 - **Returns:** 
-    - `True` if the file has no recognized magic bytes or UEFI headers.
+    - `True` if `firmware_file` has no recognized magic bytes or UEFI headers.
     - `False` otherwise.
-- **Raises:** `OSError` if the file cannot be read.
+- **Raises:** 
+    - `OSError` if `firmware_file` cannot be read.
+    - `ValueError` if `firmware_file` is not `str` or `pathlib.Path`.
 
 ```python
 # Extract unique 'fastboot oem' commands from a firmware image
@@ -122,7 +124,9 @@ extract_commands(firmware_file, force_string_lookup=False) -> list[str] | None
     - A sorted list of unique command strings when the format is recognized.
     - An empty list if no commands are found.
     - `None` if the format is unrecognized and `force_string_lookup` is `False`.
-- **Raises:** `OSError` if the file cannot be read.
+- **Raises:**
+    - `OSError` if `firmware_file` cannot be read.
+    - `ValueError` if `firmware_file` is not `str` or `pathlib.Path`.
 
 #### **Quick example:**
 ```python

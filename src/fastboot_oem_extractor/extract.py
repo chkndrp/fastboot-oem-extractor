@@ -215,7 +215,9 @@ def is_raw_image(firmware_file: str | Path) -> bool:
     :returns: `True` if the file has no recognized magic bytes or UEFI headers.
         `False` otherwise.
     :rtype: bool
-    :raises OSError: If the firmware image cannot be read.
+
+    :raises OSError: If `firmware_file` cannot be read.
+    :raises ValueError: if `firmware_file` is not `str` or `pathlib.Path`.
     """
 
     if not isinstance(firmware_file, (str, Path)):
@@ -250,7 +252,9 @@ def extract_commands(firmware_file: str | Path, force_string_lookup: bool = Fals
         recognized; an empty list if no commands are found; or `None` if the format
         is unrecognized and `force_string_lookup` is `False`.
     :rtype: list[str] | None
-    :raises OSError: If the firmware image cannot be read.
+
+    :raises OSError: If `firmware_file` cannot be read.
+    :raises ValueError: if `firmware_file` is not `str` or `pathlib.Path`.
     """
 
     if not isinstance(firmware_file, (str, Path)):
