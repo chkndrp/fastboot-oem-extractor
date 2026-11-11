@@ -51,10 +51,9 @@ def main(argv: Sequence[str] | None = None) -> int:
         help="Firmware image to analyze"
     )
     parser.add_argument(
-        "-fsl", "--force-string-lookup",
+        "-f", "--force-string-lookup",
         help="Force string lookup on unsupported files",
         action="store_true",
-        dest="fsl",
     )
     parser.add_argument(
         "-o", "--output",
@@ -63,7 +62,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     try:
-        commands, recognized = _scan_firmware(Path(args.file), args.fsl)
+        commands, recognized = _scan_firmware(Path(args.file), args.force_string_lookup)
     except OSError as error:
         logger.error("Cannot read file (%s): %s", args.file, error)
         return 1

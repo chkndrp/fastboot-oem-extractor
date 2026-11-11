@@ -83,7 +83,7 @@ fastboot oem unlock
 If your file is some raw image that does not contain any UEFI PEs or common binary magic bytes,
 you can force the string lookup via this command line option:
 ```shell
--fsl, --force-string-lookup
+-f, --force-string-lookup
 ```
 
 You can also route the clean fastboot command output to a file using this command line option:
