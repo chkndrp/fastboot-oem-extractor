@@ -127,7 +127,7 @@ extract_commands(firmware_file, force_string_lookup=False) -> list[str] | None
 #### **Quick example:**
 ```python
 # from pathlib import Path
-from fastboot_oem_extractor import extract_commands
+from fastboot_oem_extractor import is_raw_image, extract_commands
 
 # israw = is_raw_image(Path("./abl.elf"))
 israw = is_raw_image("./abl.elf")
