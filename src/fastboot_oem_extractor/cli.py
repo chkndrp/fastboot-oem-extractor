@@ -49,6 +49,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument(
         "file",
         help="Firmware image to analyze",
+        type=str,
     )
     parser.add_argument(
         "-f", "--force-string-lookup",
@@ -65,6 +66,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser.add_argument(
         "-O", "--output",
         help="Save extracted commands to a file",
+        metavar="FILE",
+        type=str,
     )
     args = parser.parse_args(argv)
 
