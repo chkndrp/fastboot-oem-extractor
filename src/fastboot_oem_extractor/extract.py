@@ -218,6 +218,9 @@ def is_raw_image(firmware_file: str | Path) -> bool:
     :raises OSError: If the firmware image cannot be read.
     """
 
+    if not isinstance(firmware_file, (str, Path)):
+        raise ValueError("firmware_file must be a string or pathlib.Path")
+
     path = Path(firmware_file)
 
     with path.open("rb") as firmware:
