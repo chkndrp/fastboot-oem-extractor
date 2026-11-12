@@ -225,6 +225,10 @@ def _validate_input(firmware_file: str | Path, offset: int, force_string_lookup:
     if isinstance(offset, bool) or not isinstance(offset, int) or offset < 0:
         raise ValueError("offset must be a non-negative integer")
 
+    file_size = Path(firmware_file).stat().st_size
+    if offset > file_size:
+        raise ValueError(f"offset ({offset}) exceeds firmware file size ({file_size} bytes)")
+
     if not isinstance(force_string_lookup, bool):
         raise ValueError("force_string_lookup must be a boolean")
 
@@ -247,7 +251,7 @@ def is_raw_image(firmware_file: str | Path, offset: int = 0) -> bool:
 
     :raises OSError: If `firmware_file` cannot be read.
     :raises ValueError: if `firmware_file` is not `str` or `pathlib.Path`,
-        or `offset` is not a non-negative `int`
+        or `offset` is not a non-negative `int` within the file size.
     """
 
     _validate_input(firmware_file, offset)
@@ -292,7 +296,8 @@ def extract_commands(
 
     :raises OSError: If `firmware_file` cannot be read.
     :raises ValueError: if `firmware_file` is not `str` or `pathlib.Path`,
-        `force_string_lookup` is not a `bool`, or `offset` is not a non-negative `int`.
+        `force_string_lookup` is not a `bool`, or `offset` is not a non-negative
+        `int` within the file size.
     """
 
     _validate_input(firmware_file, offset, force_string_lookup)

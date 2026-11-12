@@ -105,7 +105,7 @@ There are two public functions:
 ```python
 # Check if a firmware image has no known magic bytes or UEFI structures
 is_raw_image(
-    firmware_file: str | Path,
+    firmware_file: str | pathlib.Path,
     offset: int = 0
 ) -> bool:
 ```
@@ -120,12 +120,12 @@ This function is intended to help determine whenever to use
     - `False` otherwise.
 - **Raises:** 
     - `OSError` if `firmware_file` cannot be read.
-    - `ValueError` if `firmware_file` is not `str` or `pathlib.Path`, or `offset` is not a non-negative `int`.
+    - `ValueError` if `firmware_file` is not `str` or `pathlib.Path`, or `offset` is not a non-negative `int` within the file size.
 
 ```python
 # Extract unique 'fastboot oem' commands from a firmware image
 extract_commands(
-    firmware_file: str | Path,
+    firmware_file: str | pathlib.Path,
     force_string_lookup: bool = False,
     offset: int = 0
 ) -> list[str] | None:
@@ -140,7 +140,7 @@ extract_commands(
     - `None` if the format is unrecognized and `force_string_lookup` is `False`.
 - **Raises:**
     - `OSError` if `firmware_file` cannot be read.
-    - `ValueError` if `firmware_file` is not `str` or `pathlib.Path`, `force_string_lookup` is not a `bool`, or `offset` is not a non-negative `int`.
+    - `ValueError` if `firmware_file` is not `str` or `pathlib.Path`, `force_string_lookup` is not a `bool`, or `offset` is not a non-negative `int` within the file size.
 
 #### **Quick example:**
 ```python

@@ -18,7 +18,7 @@ import logging
 
 from collections.abc import Sequence
 from pathlib import Path
-from .extract import _scan_firmware
+from .extract import _scan_firmware, _validate_input
 
 logger = logging.getLogger("fastboot-oem-extractor")
 
@@ -72,11 +72,20 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     try:
+        _validate_input(
+            args.file,
+            args.offset,
+            args.force_string_lookup
+        )
+
         commands, recognized = _scan_firmware(
             Path(args.file),
             args.force_string_lookup,
             args.offset
         )
+    except ValueError as error:
+        parser.error(error)
+        return 1
     except OSError as error:
         logger.error("Cannot read file (%s): %s", args.file, error)
         return 1
