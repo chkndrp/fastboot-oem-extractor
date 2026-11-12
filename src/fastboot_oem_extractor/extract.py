@@ -99,11 +99,7 @@ def _extract_pe_files(parser: AutoParser) -> list[str]:
 def _find_uefi_parser(data: bytes) -> tuple[AutoParser, int] | None:
     """Search for valid UEFI firmware structure in data (first 10MB)"""
 
-    max_offsets = min(len(data) // 2048, 100)
-
-    for offset_index in range(max_offsets):
-        offset = offset_index * 2048
-
+    for offset in range(0, len(data), 2048):
         with contextlib.redirect_stdout(None), contextlib.redirect_stderr(None):
             parser = AutoParser(
                 data[offset:],
