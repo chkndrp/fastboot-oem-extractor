@@ -187,5 +187,5 @@ use my other tool:
 ---
 
 ## Requirements
-- Python 3.10 or newer
+- Python 3.11 or newer
 - Installed `uefi_firmware` pip package
