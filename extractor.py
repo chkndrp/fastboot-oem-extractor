@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+"""Entry point for fastboot-oem-extractor's CLI"""
+
 # Extract hidden "fastboot oem" commands from firmware blobs
 # Copyright (C) 2026 chkndrp
 #
